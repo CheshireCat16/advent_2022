@@ -1,0 +1,50 @@
+# Open the input file
+f = open("day6_input.txt", "r")
+
+# Read in the input
+input = f.readline()
+
+# Counter to track position
+i = 0
+
+# Dictionary to hold current four characters
+cur = {}
+
+# Track if there is a duplicate
+duplicate = 0
+
+# Read first three values in and increment dictionary if required
+while i < 4:
+    if input[i] not in cur:
+        cur[input[i]] = 1
+    else:
+        cur[input[i]] += 1
+        if cur[input[i]] > 1:
+            duplicate += 1
+    i += 1
+
+print(cur)
+print(duplicate)
+
+while i < len(input):
+    if not duplicate:
+        print(i)
+        break
+
+    # Add next i and remove letter four back
+    if input[i] not in cur:
+        cur[input[i]] = 1
+    else:
+        cur[input[i]] += 1
+        if cur[input[i]] > 1:
+            duplicate += 1
+    # Remove letter no longer in scope
+    cur[input[i - 4]] -= 1
+    if cur[input[i - 4]] > 0:
+        duplicate -= 1
+    
+    i += 1
+
+
+# Close the file
+f.close()
